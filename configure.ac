@@ -177,6 +177,9 @@ if test "x$enable_convert" = xyes; then
 	elif echo "$with_convert" | grep -q "reiserfs"; then
 		PKG_CHECK_MODULES(REISERFS, [reiserfscore >= 3.6.27],
 				  [BTRFSCONVERT_REISERFS=1],[])
+		if test "$BTRFSCONVERT_REISERFS" != 1; then
+			AC_MSG_ERROR([convert with reiserfs support requested but no library found])
+		fi
 	fi
 	if test "$BTRFSCONVERT_REISERFS" = 1; then
 		convertfs="${convertfs:+$convertfs,}reiserfs"
